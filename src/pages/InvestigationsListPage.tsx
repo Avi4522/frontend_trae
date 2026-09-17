@@ -148,12 +148,9 @@ function matchesStatusFilter(
 
 export default function InvestigationsListPage() {
   const navigate = useNavigate()
-  const { success, info, warning, pushToast } = useToast()
+  const { success, info } = useToast()
 
   const investigationsMap = useAppStore((s) => s.investigations.list)
-  const updateInvestigation = useAppStore(
-    (s) => s.investigations.updateInvestigation,
-  )
 
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')

@@ -807,7 +807,7 @@ export default function SettingsPage() {
                         <div className="flex justify-center">
                           <ToggleSwitch
                             checked={n.email}
-                            onChange={(v) => toggleNotification(n.id, 'email')}
+                            onChange={() => toggleNotification(n.id, 'email')}
                           />
                         </div>
                       </Td>
@@ -815,7 +815,7 @@ export default function SettingsPage() {
                         <div className="flex justify-center">
                           <ToggleSwitch
                             checked={n.push}
-                            onChange={(v) => toggleNotification(n.id, 'push')}
+                            onChange={() => toggleNotification(n.id, 'push')}
                           />
                         </div>
                       </Td>

@@ -55,6 +55,7 @@ import {
   CardFooter,
 } from '../components/common/Card'
 import { Button } from '../components/common/Button'
+import { Input } from '../components/common/Input'
 import { Badge } from '../components/common/Badge'
 import {
   Table,
@@ -87,7 +88,6 @@ import type {
   RiskLevel,
   InvestigationStatus,
   Investigation,
-  WalletHop,
   TimelineEvent,
   TimelineIconType,
   RiskIndicator,
@@ -554,7 +554,7 @@ function riskIconFor(ri: RiskIndicator) {
 export default function InvestigationDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { success, info, warning, pushToast } = useToast()
+  const { success, info, pushToast } = useToast()
 
   const investigationsList = useAppStore((s) => s.investigations.list)
   const updateInvestigation = useAppStore(
@@ -570,6 +570,35 @@ export default function InvestigationDetailPage() {
   const [hopSide, setHopSide] = useState<'All' | 'in' | 'out'>('All')
   const [hopChain, setHopChain] = useState<Chain | 'All'>('All')
   const [graphLoading] = useState(false)
+  const vasp = vasps.find((v) => v.id === inv?.vaspId) || null
+  const totalReceived = useMemo(
+    () => inv?.hops.filter((h) => h.side === 'in').reduce((a, b) => a + b.amountUsd, 0) ?? 0,
+    [inv?.hops],
+  )
+  const totalSent = useMemo(
+    () => inv?.hops.filter((h) => h.side === 'out').reduce((a, b) => a + b.amountUsd, 0) ?? 0,
+    [inv?.hops],
+  )
+  const filteredHops = useMemo(() => {
+    const q = hopSearch.trim().toLowerCase()
+    return [...(inv?.hops ?? [])]
+      .sort((a, b) => a.block - b.block)
+      .filter((h) => {
+        if (q) {
+          const inFrom = h.from.toLowerCase().includes(q)
+          const inTo = h.to.toLowerCase().includes(q)
+          const inTx = h.txHash.toLowerCase().includes(q)
+          if (!inFrom && !inTo && !inTx) return false
+        }
+        if (hopSide !== 'All' && h.side !== hopSide) return false
+        if (hopChain !== 'All' && h.chain !== hopChain) return false
+        return true
+      })
+  }, [inv?.hops, hopSearch, hopSide, hopChain])
+  const { nodes: flowNodes, edges: flowEdges } = useMemo(
+    () => inv ? buildFlowNodesEdges(inv, vasp) : { nodes: [], edges: [] },
+    [inv, vasp],
+  )
 
   if (!inv) {
     return (
@@ -597,39 +626,7 @@ export default function InvestigationDetailPage() {
     )
   }
 
-  const vasp = vasps.find((v) => v.id === inv.vaspId) || null
   const timeline = buildTimeline(inv)
-
-  const totalReceived = useMemo(
-    () => inv.hops.filter((h) => h.side === 'in').reduce((a, b) => a + b.amountUsd, 0),
-    [inv.hops],
-  )
-  const totalSent = useMemo(
-    () => inv.hops.filter((h) => h.side === 'out').reduce((a, b) => a + b.amountUsd, 0),
-    [inv.hops],
-  )
-
-  const filteredHops = useMemo(() => {
-    const q = hopSearch.trim().toLowerCase()
-    return [...inv.hops]
-      .sort((a, b) => a.block - b.block)
-      .filter((h) => {
-        if (q) {
-          const inFrom = h.from.toLowerCase().includes(q)
-          const inTo = h.to.toLowerCase().includes(q)
-          const inTx = h.txHash.toLowerCase().includes(q)
-          if (!inFrom && !inTo && !inTx) return false
-        }
-        if (hopSide !== 'All' && h.side !== hopSide) return false
-        if (hopChain !== 'All' && h.chain !== hopChain) return false
-        return true
-      })
-  }, [inv.hops, hopSearch, hopSide, hopChain])
-
-  const { nodes: flowNodes, edges: flowEdges } = useMemo(
-    () => buildFlowNodesEdges(inv, vasp),
-    [inv, vasp],
-  )
 
   const handleRouteToSahyog = () => {
     const ok = window.confirm(
@@ -1213,7 +1210,7 @@ export default function InvestigationDetailPage() {
               <div className="relative pl-2 pr-1">
                 <div className="absolute left-[1.25rem] top-2 bottom-2 w-px bg-border/80" />
                 <div className="space-y-5">
-                  {timeline.map((ev, idx) => (
+                  {timeline.map((ev) => (
                     <div key={ev.id} className="flex items-start gap-4 relative">
                       <IconBubble iconType={ev.iconType}>
                         {timelineIconFor(ev.iconType)}
