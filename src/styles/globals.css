@@ -1,0 +1,117 @@
+@import '@xyflow/react/dist/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+    --primary: 34 211 238;
+    --primary-foreground: 3 16 27;
+    --secondary: 34 197 94;
+    --secondary-foreground: 3 16 27;
+    --accent: 168 85 247;
+    --accent-foreground: 255 255 255;
+    --muted: 241 245 249;
+    --muted-foreground: 100 116 139;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 34 211 238;
+    --success: 34 197 94;
+    --warning: 245 158 11;
+    --danger: 239 68 68;
+    --graph-source: 34 211 238;
+    --graph-bridge: 249 115 22;
+    --graph-exchange: 34 197 94;
+    --graph-risk: 244 63 94;
+    --grid-dot: 15 23 42;
+  }
+
+  .dark {
+    --background: 3 7 18;
+    --foreground: 226 232 240;
+    --card: 7 13 28;
+    --card-foreground: 248 250 252;
+    --popover: 8 15 30;
+    --popover-foreground: 248 250 252;
+    --primary: 34 211 238;
+    --primary-foreground: 3 16 27;
+    --secondary: 34 197 94;
+    --secondary-foreground: 3 16 27;
+    --accent: 168 85 247;
+    --accent-foreground: 255 255 255;
+    --muted: 15 23 42;
+    --muted-foreground: 148 163 184;
+    --border: 30 41 59;
+    --input: 15 23 42;
+    --ring: 34 211 238;
+    --success: 34 197 94;
+    --warning: 245 158 11;
+    --danger: 239 68 68;
+    --graph-source: 34 211 238;
+    --graph-bridge: 249 115 22;
+    --graph-exchange: 34 197 94;
+    --graph-risk: 244 63 94;
+    --grid-dot: 148 163 184;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background bg-bg-glow text-foreground antialiased;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      sans-serif;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-3xl border border-border/70 bg-card/80 shadow-glow backdrop-blur-xl;
+  }
+
+  .panel-grid {
+    @apply bg-grid-dot bg-[size:22px_22px];
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl dark:border-white/5 dark:bg-white/[0.03];
+  }
+
+  .status-chip {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+  }
+}
+
+.react-flow__attribution {
+  display: none;
+}
