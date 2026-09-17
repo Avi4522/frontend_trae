@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ShieldCheck,
+  Link2,
   ArrowRight,
-  PlayCircle,
   AlertTriangle,
   CheckCircle2,
   Wallet,
@@ -20,18 +20,18 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronDown,
 } from 'lucide-react'
 import { Button } from '../components/common/Button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/common/Card'
 import { Badge } from '../components/common/Badge'
-import { ThemeToggle } from '../components/common/ThemeToggle'
 import { cn } from '../utils/cn'
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Security', href: '#security' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Platform', href: '#features' },
+  { label: 'Solutions', href: '#how-it-works' },
+  { label: 'Resources', href: '#security' },
+  { label: 'Company', href: '#faq' },
 ]
 
 const problemItems = [
@@ -131,11 +131,11 @@ const staggerContainer = {
 function NodeGraphBackdrop() {
   const nodes = Array.from({ length: 40 }, (_, i) => ({
     id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    r: 1.2 + Math.random() * 2.4,
-    delay: Math.random() * 2,
-    duration: 4 + Math.random() * 5,
+    x: (i * 37 + 11) % 100,
+    y: (i * 61 + 17) % 100,
+    r: 1.2 + ((i * 19) % 12) / 10,
+    delay: (i % 8) * 0.22,
+    duration: 4 + (i % 5),
   }))
 
   const lines: { x1: number; y1: number; x2: number; y2: number }[] = []
@@ -185,9 +185,9 @@ function NodeGraphBackdrop() {
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 0.7, 0] }}
           transition={{
-            duration: 5 + Math.random() * 4,
+            duration: 5 + (i % 4),
             repeat: Infinity,
-            delay: Math.random() * 4,
+            delay: (i % 7) * 0.35,
             ease: EASE_IN_OUT,
           }}
         />
@@ -232,64 +232,64 @@ function HeroDashboardMock() {
       transition={{ duration: 0.7, delay: 0.3, ease: EASE_OUT }}
       className="relative"
     >
-      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-primary/40 via-accent/30 to-secondary/40 opacity-60 blur-2xl" />
-      <Card className="relative overflow-hidden">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-danger animate-pulseSoft" />
-              <div className="h-2 w-2 rounded-full bg-warning animate-pulseSoft" style={{ animationDelay: '0.3s' }} />
-              <div className="h-2 w-2 rounded-full bg-success animate-pulseSoft" style={{ animationDelay: '0.6s' }} />
+      <div className="absolute -inset-1 rounded-[1.75rem] bg-gradient-to-br from-primary/45 via-accent/25 to-primary/20 opacity-70 blur-2xl" />
+      <div className="relative overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#0d1524]/80 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.45)] backdrop-blur-2xl sm:p-7">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.12),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_45%)]" />
+        <div className="relative">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(110,231,183,0.9)]" />
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-200">Live Investigation</span>
             </div>
-            <Badge variant="info" className="text-[10px]">LIVE INVESTIGATION</Badge>
+            <span className="font-mono text-[10px] text-slate-500">Trace #INV-2026-0417</span>
           </div>
-          <CardTitle className="text-sm mt-2">Fund Flow Analysis</CardTitle>
-          <CardDescription className="text-xs">0x7a2f…e41b · Trace #INV-2026-0417</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap items-center gap-1.5 mb-4">
-            <Badge variant="success" className="text-[10px]">Confidence 92%</Badge>
-            <Badge variant="info" className="text-[10px]">VASP: Binance</Badge>
-            <Badge variant="default" className="text-[10px]">Chain: ETH</Badge>
+          <div className="mt-5 flex items-end justify-between gap-4">
+            <div>
+              <div className="text-xl font-bold tracking-tight text-white">Fund Flow Analysis</div>
+            </div>
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-200">
+              <span className="flex items-center gap-1.5 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-2.5 py-1">
+                <CheckCircle2 className="h-3 w-3" />
+                Transactions ▾
+              </span>
+            </div>
           </div>
-          <div className="relative flex flex-col items-center gap-2">
-            {[
-              { label: 'Source', sub: '0x7a2f…e41b', color: 'bg-graph-source', textColor: 'text-graph-source' },
-              { label: 'Hop 1', sub: '0x3b91…c28a', color: 'bg-graph-bridge', textColor: 'text-graph-bridge' },
-              { label: 'Hop 2', sub: '0x8f44…a712', color: 'bg-graph-bridge', textColor: 'text-graph-bridge' },
-              { label: 'Deposit', sub: '0x1d2e…9cf0', color: 'bg-graph-exchange', textColor: 'text-graph-exchange' },
-              { label: 'Binance', sub: 'Hot Wallet 0x4', color: 'bg-graph-exchange', textColor: 'text-graph-exchange', last: true },
-            ].map((n, i) => (
-              <div key={i} className="flex w-full items-center gap-3">
-                <div
-                  className={cn(
-                    'flex-1 rounded-xl border border-white/10 px-3 py-2 text-xs shadow-inner',
-                    'bg-gradient-to-r from-white/[0.04] to-white/[0.02]',
-                  )}
-                >
-                  <div className={cn('font-bold text-[11px]', n.textColor)}>{n.label}</div>
-                  <div className="text-muted-foreground text-[10px] font-mono">{n.sub}</div>
+          <div className="mt-8 overflow-hidden pb-2">
+            <div className="flex min-w-0 items-start">
+              {[
+                { label: 'Source', sub: '0x7a2f…e41b', icon: Wallet, tone: 'text-cyan-200 border-cyan-300/40 bg-cyan-300/10' },
+                { label: 'Hop 1', sub: '0x3b91…c28a', icon: Network, tone: 'text-violet-200 border-violet-300/35 bg-violet-300/10' },
+                { label: 'Hop 2', sub: '0x8f44…a712', icon: Network, tone: 'text-violet-200 border-violet-300/35 bg-violet-300/10' },
+                { label: 'Deposit', sub: '0x1d2e…9cf0', icon: Building2, tone: 'text-amber-200 border-amber-300/35 bg-amber-300/10' },
+                { label: 'Binance Hot Wallet', sub: 'Hot Wallet 0x4', icon: ShieldCheck, tone: 'text-emerald-200 border-emerald-300/35 bg-emerald-300/10' },
+              ].map((n, i) => (
+                <div key={n.label} className="flex min-w-0 flex-1 items-start">
+                  <div className="flex min-w-[62px] flex-1 flex-col items-center text-center">
+                    <div className={cn('flex h-11 w-11 items-center justify-center rounded-[0.85rem] border shadow-[0_0_24px_rgba(34,211,238,0.08)]', n.tone)}>
+                      <n.icon className="h-4 w-4" />
+                    </div>
+                    <div className="mt-3 text-[10px] font-semibold leading-tight text-slate-300">{n.label}</div>
+                  </div>
+                  {i < 4 && <div className="mt-5 h-[1px] flex-1 bg-gradient-to-r from-cyan-300/30 via-violet-300/30 to-violet-300/30" />}
                 </div>
-                {!n.last && <ChevronRight className="h-3 w-3 text-muted-foreground shrink-0" />}
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[10px]">
-            <div className="rounded-lg border border-border/60 bg-muted/40 px-2 py-1.5">
-              <div className="text-muted-foreground">Amount</div>
-              <div className="font-bold text-foreground mt-0.5">₹4.28 Cr</div>
-            </div>
-            <div className="rounded-lg border border-border/60 bg-muted/40 px-2 py-1.5">
-              <div className="text-muted-foreground">Hops</div>
-              <div className="font-bold text-foreground mt-0.5">3</div>
-            </div>
-            <div className="rounded-lg border border-border/60 bg-muted/40 px-2 py-1.5">
-              <div className="text-muted-foreground">Time</div>
-              <div className="font-bold text-foreground mt-0.5">2m 14s</div>
+              ))}
             </div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="mt-7 flex flex-wrap gap-2">
+            <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-100">CONFIDENCE 92%</span>
+            <span className="rounded-full border border-violet-300/20 bg-violet-300/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-violet-100">VASP: BINANCE</span>
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-300">CHAIN: ETH</span>
+          </div>
+          <div className="mt-6 grid grid-cols-3 divide-x divide-white/5 border-t border-white/5 pt-5 text-center">
+            <div className="px-2"><div className="text-[10px] uppercase tracking-wide text-slate-500">Transaction Stats</div><div className="mt-1 text-xs font-semibold text-white">24.5k</div></div>
+            <div className="px-2"><div className="text-[10px] uppercase tracking-wide text-slate-500">Transaction Stats</div><div className="mt-1 text-xs font-semibold text-white">1,232</div></div>
+            <div className="px-2"><div className="text-[10px] uppercase tracking-wide text-slate-500">Analyzed Transaction</div><div className="mt-1 text-xs font-semibold text-white">30/Sk+</div></div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }
@@ -324,7 +324,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden text-foreground">
+    <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#070b14] text-slate-100">
       {/* NAVBAR */}
       <header
         className={cn(
@@ -338,12 +338,13 @@ export default function LandingPage() {
           <Link to="/" className="flex items-center gap-2 group">
             <div className="relative">
               <div className="absolute -inset-1 rounded-xl bg-gradient-to-br from-primary/40 to-accent/40 opacity-60 blur-md group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-card/80">
-                <ShieldCheck className="h-5 w-5 text-primary" />
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/35 bg-white/[0.06] text-cyan-200">
+                <ShieldCheck className="h-5 w-5" />
+                <Link2 className="absolute h-3 w-3 translate-x-2 translate-y-2 text-violet-200" />
               </div>
             </div>
-            <span className="text-lg font-bold tracking-tight">
-              Chain<span className="text-primary">Trace</span>
+              <span className="text-lg font-semibold tracking-tight text-white">
+                Chain<span className="text-cyan-300">Trace</span>
             </span>
           </Link>
 
@@ -356,20 +357,20 @@ export default function LandingPage() {
                   e.preventDefault()
                   handleNavClick(l.href)
                 }}
-                className="relative rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50"
+                className="relative inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-white/[0.05] hover:text-white"
               >
                 {l.label}
+                <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
               </a>
             ))}
           </nav>
 
           <div className="flex items-center gap-2">
-            <ThemeToggle size="sm" />
             <div className="hidden sm:flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
+              <Button variant="ghost" size="sm" className="text-slate-300 hover:bg-white/[0.06] hover:text-white" onClick={() => navigate('/login')}>
                 Log In
               </Button>
-              <Button variant="primary" size="sm" onClick={() => navigate('/login')}>
+              <Button variant="primary" size="sm" className="bg-cyan-300 text-slate-950 hover:bg-cyan-200" onClick={() => navigate('/login')}>
                 Start Investigation
               </Button>
             </div>
@@ -449,12 +450,12 @@ export default function LandingPage() {
 
       {/* HERO */}
       <section className="relative min-h-[92vh] overflow-hidden pt-24 pb-16 sm:pt-28">
-        <div className="absolute inset-0 bg-grid-dot bg-[size:28px_28px] opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
+        <div className="absolute inset-0 bg-grid-dot bg-[size:28px_28px] opacity-20 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
         <div className="absolute inset-0">
           <NodeGraphBackdrop />
         </div>
-        <div className="absolute left-1/2 top-24 -z-0 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute right-10 top-40 -z-0 h-[380px] w-[380px] rounded-full bg-accent/10 blur-[100px]" />
+        <div className="absolute left-1/2 top-24 -z-0 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-cyan-300/[0.07] blur-[120px]" />
+        <div className="absolute right-10 top-40 -z-0 h-[380px] w-[380px] rounded-full bg-violet-400/[0.08] blur-[100px]" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -465,24 +466,19 @@ export default function LandingPage() {
               className="max-w-xl"
             >
               <motion.div custom={0} variants={fadeUp}>
-                <Badge variant="glow" className="mb-5">
-                  SIH-2026 · SIH-182 · Automated VASP Attribution
-                </Badge>
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-300 shadow-sm backdrop-blur-md">
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-300">✓</span>
+                  SIH-2026 · SIH-182 AUTOMATED VASP ATTRIBUTION
+                </div>
               </motion.div>
 
               <motion.h1
                 custom={1}
                 variants={fadeUp}
-                className="text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl text-balance"
+                className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl text-balance"
               >
-                Trace{' '}
-                <span className="bg-gradient-to-r from-primary via-cyan-300 to-accent bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(34,211,238,0.25)]">
-                  Unknown Crypto Wallets
-                </span>
-                <br />
-                to{' '}
-                <span className="bg-gradient-to-r from-accent via-fuchsia-400 to-secondary bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.25)]">
-                  VASPs. Automatically.
+                <span className="bg-gradient-to-r from-cyan-200 via-cyan-300 to-violet-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                  Trace Unknown Crypto<br/>Wallets to VASPs.<br/>Automatically.
                 </span>
               </motion.h1>
 
@@ -498,40 +494,39 @@ export default function LandingPage() {
               <motion.div
                 custom={3}
                 variants={fadeUp}
-                className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+                className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
               >
-                <Button size="lg" onClick={() => navigate('/login')} className="shadow-glow-primary">
-                  Start Free Investigation
-                  <ArrowRight className="h-5 w-5" />
+                <Button size="lg" onClick={() => navigate('/login')} className="shadow-[0_0_24px_rgba(167,139,250,0.2)] bg-slate-700/80 hover:bg-slate-700 text-white font-medium border border-white/10 rounded-xl px-6">
+                  Get In-store Now
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
+                  className="border-white/10 bg-transparent text-white hover:bg-white/5 font-medium rounded-xl px-6"
                   onClick={() => {
                     const el = document.querySelector('#how-it-works')
                     if (el) el.scrollIntoView({ behavior: 'smooth' })
                   }}
                 >
-                  See How It Works
-                  <PlayCircle className="h-5 w-5" />
+                  Start Investigation
                 </Button>
               </motion.div>
 
               <motion.div
                 custom={4}
                 variants={fadeUp}
-                className="mt-10"
+                className="mt-12"
               >
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                  Trusted By · Indian LEA Ecosystem
+                <div className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-4">
+                  TRUSTED BY INDIAN LEA ECOSYSTEM
                 </div>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold text-muted-foreground/90">
-                  {['MeitY', 'NCRB', 'FIU-IND', 'CDR', 'NIC', 'STQC'].map((n, i) => (
-                    <span key={n} className="flex items-center gap-1.5">
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary/70" style={{ animationDelay: `${i * 0.1}s` }} />
-                      {n}
-                    </span>
-                  ))}
+                <div className="flex flex-wrap items-center gap-6 text-sm font-semibold text-slate-300 opacity-60">
+                  {/* Mock seals using standard icons for now */}
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-500 bg-slate-800"><ShieldCheck className="h-5 w-5 text-slate-400"/></div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-500 bg-slate-800"><Building2 className="h-5 w-5 text-slate-400"/></div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-500 bg-slate-800"><ShieldCheck className="h-5 w-5 text-slate-400"/></div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-500 bg-slate-800"><Building2 className="h-5 w-5 text-slate-400"/></div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-500 bg-slate-800"><ShieldCheck className="h-5 w-5 text-slate-400"/></div>
                 </div>
               </motion.div>
             </motion.div>
